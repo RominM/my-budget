@@ -4,16 +4,46 @@ import CreditModule from './components/credit-module/CreditModule'
 import DebitModule from './components/debit-module/DebitModule'
 import CreditList from './components/credit-list/CreditList'
 import DebitList from './components/debit-list/DebitList'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import Loader from './components/loader/Loader'
+import { supabase } from '../supabase'
 
 function App() {
   const [balance, setBalance] = useState(0)
   const [credits, setCredits] = useState([])
   const [debits, setDebits] = useState([])
+  const [loader, setLoader] = useState(false)
+
+  useEffect(() => {
+    const fetchTransactions = async () => {
+      setLoader(true)
+      const { data, error } = await supabase
+      .from('transaction')
+      .select('*')
+      .order('created_at', { ascending: false })
+      setLoader(false)
+      
+      if (!data || error) {
+        console.error("Erreur fetch initial :", error)
+        return
+      }
+
+      const creditList = data.filter(tx => tx.amount > 0)
+      const debitList = data.filter(tx => tx.amount < 0)
+      const totalBalance = data.reduce((acc, tx) => acc + tx.amount, 0)
+
+      setCredits(creditList)
+      setDebits(debitList)
+      setBalance(totalBalance)
+    }
+
+    fetchTransactions()
+  }, [])
 
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem", width: "100%" }}>
       <FinalBalance balance={balance} />
+      {loader ? <Loader /> : 
       <div className="modules" style={{ display: "flex", gap: "1rem", width: "100%" }}>
         <div style={{ display: "flex", flexDirection: "column", gap: "1rem", width: "50%" }}>
           <CreditModule
@@ -31,7 +61,7 @@ function App() {
           />
           <DebitList debits={debits} />
         </div>
-      </div>
+      </div>}
     </div>
   )
 }
