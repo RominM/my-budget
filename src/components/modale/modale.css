@@ -1,0 +1,26 @@
+.modale-mask {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(13, 13, 14, 0.604);
+  z-index: 999;
+}
+
+.modale {
+  position: relative;
+  min-width: 113px;
+  min-height: 63px;
+  padding: 50px 20px 20px;
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}

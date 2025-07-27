@@ -12,6 +12,7 @@ function App() {
   const [balance, setBalance] = useState(0)
   const [credits, setCredits] = useState([])
   const [debits, setDebits] = useState([])
+  const [fixedCosts, setFixedCosts] = useState([])
   const [loader, setLoader] = useState(false)
 
   useEffect(() => {
@@ -29,11 +30,13 @@ function App() {
       }
 
       const creditList = data.filter(tx => tx.amount > 0)
-      const debitList = data.filter(tx => tx.amount < 0)
+      const debitList = data.filter(tx => tx.amount < 0 && !tx.is_fixed)
+      const fixedCosts = data.filter(tx => tx.is_fixed)
       const totalBalance = data.reduce((acc, tx) => acc + tx.amount, 0)
 
       setCredits(creditList)
       setDebits(debitList)
+      setFixedCosts(fixedCosts)
       setBalance(totalBalance)
     }
 
@@ -42,7 +45,7 @@ function App() {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem", width: "100%" }}>
-      <FinalBalance balance={balance} />
+      <FinalBalance balance={balance} fixedCosts={fixedCosts} />
       {loader ? <Loader /> : 
       <div className="modules" style={{ display: "flex", gap: "1rem", width: "100%" }}>
         <div style={{ display: "flex", flexDirection: "column", gap: "1rem", width: "50%" }}>
