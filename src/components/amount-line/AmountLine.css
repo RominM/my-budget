@@ -1,0 +1,14 @@
+.amount-line {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.amount-line:nth-child(1) .amount-line:nth-child(3) {
+  min-width: 10px;
+}
+
+.amount-line:nth-child(2) {
+  min-width: 100%;
+}
+
