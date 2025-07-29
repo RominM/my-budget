@@ -1,11 +1,24 @@
 .amount-line {
   display: flex;
   justify-content: space-between;
-  width: 100%;
+  /* width: 100%; */
+  cursor: pointer;
+  transition: .3s;
+  border: solid 1px transparent;
+  border-radius: 3px;
+  padding: 2px 4px;
+}
+
+.amount-line:hover {
+  transform: translateY(-3px);
+  border: solid 1px #00000056;
 }
 
 .amount-line:nth-child(1) .amount-line:nth-child(3) {
+  display: block;
+  background-color: red;
   min-width: 10px;
+  width: 100%;
 }
 
 .amount-line:nth-child(2) {

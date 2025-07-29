@@ -1,0 +1,6 @@
+.transaction-list {
+  width: 100%; 
+  height: auto; 
+  overflow: auto; 
+  padding-top: 5px;
+}

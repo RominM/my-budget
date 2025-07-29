@@ -13,7 +13,9 @@
 .modale {
   position: relative;
   min-width: 113px;
+  max-width: 80dvw;
   min-height: 63px;
+  max-height: 80dvh;
   padding: 50px 20px 20px;
   background-color: #fff;
   border-radius: 8px;
